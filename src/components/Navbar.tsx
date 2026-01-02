@@ -3,7 +3,7 @@ import { Settings } from "lucide-react";
 export default function Navbar() {
 
     return(
-        <nav className="h-12 border-b-2 border-my-main flex items-center justify-between px-6 mb-2 shrink-0">
+        <nav className="h-12 border-b-2 border-my-main flex items-center justify-between px-10 mb-2 shrink-0">
         <h1 className="font-bold tracking-tighter uppercase text-md">
           AI Semantic Game
         </h1>

@@ -15,7 +15,7 @@ function App() {
       {/* MOBILE NOTICE: displayed only on mobile - desktop browser is required to play the game */}
       <MobileOverlay />
       {/* 3. DESKTOP LAYOUT:hidden on mobile, visible from MD query */}
-      <section className="hidden md:flex flex-1 overflow-hidden">
+      <section className="hidden md:flex flex-1 justify-center overflow-hidden">
         {/* LEFT COLUMN: Live JSON Output from the AI */}
         <LiveJSON />
         {/* CENTER COLUMN: GameScreen */}
