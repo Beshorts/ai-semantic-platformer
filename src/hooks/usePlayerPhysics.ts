@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useGameStore } from "../store/gameStore";
 import type { keyboardState } from "./useKeyboardInput";
+import { findGroundedPlatform } from "../utils/collision";
 
 export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) => {
   const hasJumped = useRef(false);
@@ -10,7 +11,7 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
     
     const physicsLoop = () => {
       const state = useGameStore.getState();
-      const { player, config } = state;
+      const { player, config, currentLevel } = state;
       
       // Early exit if player is dead
       if (player.isDead) {
@@ -28,7 +29,7 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
       let newVelocityY = player.velocityY;
       let newX = player.x;
       let newY = player.y;
-      let newIsGrounded = false;
+      let newIsGrounded = player.isGrounded;
       let newIsJumping = player.isJumping;
       
       // Horizontal movement
@@ -38,7 +39,6 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
         newVelocityX = config.moveSpeed;
       } else {
         newVelocityX *= config.friction;
-        // Clamp tiny values to zero so we stop updating the store forever
         if (Math.abs(newVelocityX) < 0.01) {
           newVelocityX = 0;
         }
@@ -57,14 +57,43 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
         hasJumped.current = false;
       }
       
-      // Apply gravity
-      newVelocityY += config.gravity;
+      // Apply gravity only when not grounded
+      if (!newIsGrounded) {
+        newVelocityY += config.gravity;
+      } else {
+        newVelocityY = 0;
+      }
       
       // Update position
       newX += newVelocityX;
       newY += newVelocityY;
       
-      // Ground collision
+      // Platform collision detection (only when moving vertically or not already grounded)
+      const shouldCheckPlatforms =
+        currentLevel &&
+        currentLevel.platforms.length > 0 &&
+        (Math.abs(newVelocityY) > 0.001 || Math.abs(newVelocityX) > 0.001 || !newIsGrounded);
+
+      if (shouldCheckPlatforms) {
+        const { platform: groundedPlatform, platformTop } = findGroundedPlatform(
+          { ...player, x: newX, y: newY, velocityY: newVelocityY },
+          config.playerSize,
+          currentLevel.platforms,
+          config.width,
+          config.height
+        );
+        
+        if (groundedPlatform) {
+          newY = platformTop - config.playerSize;
+          newVelocityY = 0;
+          newIsGrounded = true;
+          newIsJumping = false;
+        } else {
+          newIsGrounded = false;
+        }
+      }
+      
+      // Ground collision (fallback floor)
       const groundY = config.height - config.playerSize;
       if (newY >= groundY) {
         newY = groundY;
@@ -83,7 +112,6 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
         newVelocityX = 0;
       }
       
-      // If nothing changed, skip the store update to avoid needless re-renders
       const positionChanged = newX !== player.x || newY !== player.y;
       const velocityChanged = newVelocityX !== player.velocityX || newVelocityY !== player.velocityY;
       const statusChanged = newIsGrounded !== player.isGrounded || newIsJumping !== player.isJumping;
@@ -107,5 +135,5 @@ export const usePlayerPhysics = (keyboardState: React.RefObject<keyboardState>) 
     return () => {
       cancelAnimationFrame(animationFrameId);
     };
-  }, [keyboardState]); // ← EMPTY! keyboardState è un ref stabile
+  }, [keyboardState]);
 };

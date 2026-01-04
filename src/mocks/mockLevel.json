@@ -1,0 +1,139 @@
+{
+  "id": "mock-level-1",
+  "theme": {
+    "name": "Neutral Test Level",
+    "backgroundColor": "#1a1a2e",
+    "atmosphereColor": "#16213e"
+  },
+  "platforms": [
+    {
+      "id": "platform-1",
+      "x": 10,
+      "y": 80,
+      "width": 20,
+      "height": 8,
+      "color": "#4A5568",
+      "gradient": {
+        "from": "#4A5568",
+        "to": "#2D3748",
+        "direction": "to-b"
+      }
+    },
+    {
+      "id": "platform-2",
+      "x": 35,
+      "y": 60,
+      "width": 18,
+      "height": 8,
+      "color": "#5A67D8",
+      "gradient": {
+        "from": "#5A67D8",
+        "to": "#4C51BF",
+        "direction": "to-b"
+      }
+    },
+    {
+      "id": "platform-3",
+      "x": 60,
+      "y": 45,
+      "width": 22,
+      "height": 8,
+      "color": "#48BB78",
+      "gradient": {
+        "from": "#48BB78",
+        "to": "#38A169",
+        "direction": "to-b"
+      }
+    },
+    {
+      "id": "platform-4",
+      "x": 25,
+      "y": 30,
+      "width": 20,
+      "height": 8,
+      "color": "#ED8936",
+      "gradient": {
+        "from": "#ED8936",
+        "to": "#DD6B20",
+        "direction": "to-b"
+      }
+    },
+    {
+      "id": "platform-5",
+      "x": 70,
+      "y": 15,
+      "width": 25,
+      "height": 8,
+      "color": "#9F7AEA",
+      "gradient": {
+        "from": "#9F7AEA",
+        "to": "#805AD5",
+        "direction": "to-b"
+      }
+    }
+  ],
+  "words": [
+    {
+      "id": "word-1",
+      "text": "START",
+      "platformId": "platform-1",
+      "color": "#F7FAFC",
+      "fontSize": 18,
+      "activated": false,
+      "animationType": "flip"
+    },
+    {
+      "id": "word-3",
+      "text": "FLOW",
+      "platformId": "platform-3",
+      "color": "#EDF2F7",
+      "fontSize": 18,
+      "activated": false,
+      "animationType": "scramble"
+    },
+    {
+      "id": "word-5",
+      "text": "COMPLETE",
+      "platformId": "platform-5",
+      "color": "#FBD38D",
+      "fontSize": 20,
+      "activated": false,
+      "animationType": "physics2d"
+    }
+  ],
+  "collectibles": {
+    "stars": [
+      {
+        "id": "star-1",
+        "x": 44,
+        "y": 54,
+        "collected": false
+      },
+      {
+        "id": "star-2",
+        "x": 35,
+        "y": 24,
+        "collected": false
+      },
+      {
+        "id": "star-3",
+        "x": 80,
+        "y": 35,
+        "collected": false
+      },
+      {
+        "id": "star-4",
+        "x": 15,
+        "y": 45,
+        "collected": false
+      },
+      {
+        "id": "star-5",
+        "x": 85,
+        "y": 8,
+        "collected": false
+      }
+    ]
+  },
+  "difficulty": "easy"
+}

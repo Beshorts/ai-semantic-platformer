@@ -14,6 +14,7 @@ export const Player = () => {
   // Apply animations
   usePlayerAnimations(playerRef, player);
   
+  // keep inline style for performance: these change every frame and TailwindCSS  works in build-time only
   return (
     <div
       ref={playerRef}
@@ -30,5 +31,6 @@ export const Player = () => {
         willChange: 'transform',
       }}
     />
+    
   );
 };
