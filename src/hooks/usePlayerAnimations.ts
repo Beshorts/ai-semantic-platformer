@@ -95,7 +95,6 @@ export const usePlayerAnimations = (
         velocityX: player.velocityX,
         isDead: player.isDead,
       };
-      console.log("Animations Hook Triggered",previousState.current.velocityX, player);
     },
     {
       scope: elementRef,
